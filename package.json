@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack --mode development --module-bind js=babel-loader",
     "build": "webpack --mode production --module-bind js=babel-loader",
-    "start": "webpack-dev-server --mode development --open"
+    "start": "webpack-dev-server --mode development --open",
+    "collect": "node build/index.js"
   },
   "keywords": [],
   "author": "",
@@ -18,9 +19,13 @@
     "babel-loader": "^8.0.5",
     "copy-webpack-plugin": "^5.0.2",
     "css-loader": "^2.1.1",
+    "fast-csv": "^2.4.1",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
+    "merge2": "^1.2.3",
     "mini-css-extract-plugin": "^0.5.0",
+    "through2": "^3.0.1",
+    "through2-filter": "^3.0.0",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.3.0",
     "webpack-dev-server": "^3.2.1"
@@ -28,6 +33,7 @@
   "dependencies": {
     "@babel/polyfill": "^7.4.3",
     "d3": "^5.9.2",
-    "simple-statistics": "^7.0.2"
+    "simple-statistics": "^7.0.2",
+    "stream-to-promise": "^2.2.0"
   }
 }
