@@ -11,8 +11,8 @@ const filterByUik = dic => through2.obj(function (data, enc, cb) {
   cb(null, null);
 });
 
-const unwrapResult = ({ voters, totalVotes, 'Порошенко Петро': Poroshenko, 'Зеленський Володимир': Zelenskiy }) =>
-  ({ voters, totalVotes, Poroshenko, Zelenskiy });
+const unwrapResult = ({ voters, totalVotes, 'Порошенко Петро': Poroshenko, 'Зеленський Володимир': Zelenskiy, 'Тимошенко Юлія': Tymoshenko }) =>
+  ({ voters, totalVotes, Poroshenko, Zelenskiy, Tymoshenko });
 
 const populate = (stationMap) => through2.obj(function (data, enc, cb) {
   const station = stationMap[getKey(data)];

@@ -29,11 +29,9 @@ async function run() {
   const results = await populateStations(stationsWithDistance)
 
   await streamToPromise(
-    csv.writeToPath("dist/data/results_2019_kyiv.csv", results, {headers: true, delimiter: ';'})
+    csv.writeToPath("data/results_2019_kyiv.csv", results, {headers: true, delimiter: ';'})
   );
 
-  //console.log(stationsWithDistance.map(({ address, minDistance }) => [address, minDistance]));
-  //console.log(results);
 }
 
 const t = new Date;

@@ -15,6 +15,7 @@
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.4.0",
+    "@babel/plugin-proposal-class-properties": "^7.4.0",
     "@babel/preset-env": "^7.4.2",
     "babel-loader": "^8.0.5",
     "copy-webpack-plugin": "^5.0.2",
@@ -33,6 +34,7 @@
   "dependencies": {
     "@babel/polyfill": "^7.4.3",
     "d3": "^5.9.2",
+    "d3-simple-slider": "^1.4.2",
     "simple-statistics": "^7.0.2",
     "stream-to-promise": "^2.2.0"
   }
