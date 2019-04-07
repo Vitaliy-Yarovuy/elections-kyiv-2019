@@ -51,7 +51,7 @@ export class GraphBase {
         const result = {
           voters: parseInt(row.voters),
           totalVotes: parseInt(row.totalVotes),
-          minDistance: parseFloat(row.minDistance)
+          distance: parseFloat(row.distance)
         }
 
         Object.keys(candidates).forEach(candidate => {
@@ -65,7 +65,7 @@ export class GraphBase {
 
   scaleRange() {
     // Scale the range of the data
-    this.x.domain([0, d3.max(this.results, row => row.minDistance) + 300]);
+    this.x.domain([0, d3.max(this.rawData, row => row.distance) + 300]);
     this.y.domain([0, d3.max(this.results,
       row => Math.max(
         ...Object.keys(candidates).map(

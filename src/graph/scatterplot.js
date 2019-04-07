@@ -21,7 +21,7 @@ export class Scatterplot extends GraphBase {
         .enter().append("circle")
         .attr("r", 1)
         .attr('fill', candidates[candidate].color)
-        .attr("cx", row => this.x(row.minDistance))
+        .attr("cx", row => this.x(row.distance))
         .attr("cy", row => this.y(row[percentageKey(candidate)]));
     });
   }

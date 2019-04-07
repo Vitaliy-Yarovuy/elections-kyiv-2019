@@ -12,51 +12,29 @@ export class GraphWithFixedtStep extends GraphBase {
 
   lines = Object.keys(candidates).reduce((acc, candidate) => {
     acc[candidate] = d3.line()
-      .x(row => this.x(row.minDistance))
+      .x(row => this.x(row.distance))
       .y(row => this.y(row[percentageKey(candidate)]));
     return acc;
   }, {});
 
   lineVotes = d3.line()
-    .x(row => this.x(row.minDistance))
+    .x(row => this.x(row.distance))
     .y(row => this.y1(row.totalVotes));
 
-  slider = sliderHorizontal()
-    .min(50)
-    .max(1000)
-    .step(50)
-    .width(graph.width)
-    .displayValue(true)
-    .on('onchange', val => {
-      this.step = val;
-      this.process();
-      this.update();
-    });
+
 
   constructor(selector = 'body') {
     super(selector);
-
-    d3.select(selector)
-      .append('svg')
-      .attr('width', graph.width + graph.margin.left + graph.margin.right)
-      .attr('height', 100)
-      .append('g')
-      .attr('transform', 'translate(' + graph.margin.left + ',30)')
-      .call(this.slider);
-
-    //bug in slider
-    setTimeout(() => {
-      this.slider.value(this.step);
-    }, 400);
+    this.initSlider(selector);
   }
 
   process() {
     this.results = Object.values(
       this.rawData.reduce((acc, row) => {
-        const key = Math.floor(row.minDistance / this.step);
+        const key = Math.floor(row.distance / this.step);
         if (!acc[key]) {
           acc[key] = {
-            minDistance: (key + .5) * this.step,
+            distance: (key + .5) * this.step,
           };
         }
 
@@ -86,12 +64,40 @@ export class GraphWithFixedtStep extends GraphBase {
       .style("stroke", 'black');
   }
 
+
+  initSlider(selector) {
+    this.slider = sliderHorizontal()
+      .min(50)
+      .max(1000)
+      .step(50)
+      .width(graph.width)
+      .displayValue(true)
+      .on('onchange', val => {
+        this.step = val;
+        this.process();
+        this.update();
+      });
+
+    d3.select(selector)
+      .append('svg')
+      .attr('width', graph.width + graph.margin.left + graph.margin.right)
+      .attr('height', 100)
+      .append('g')
+      .attr('transform', 'translate(' + graph.margin.left + ',30)')
+      .call(this.slider);
+
+    //bug in slider
+    setTimeout(() => {
+      this.slider.value(this.step);
+    }, 500);
+  }
+
   update() {
     this.y1.domain([0, d3.max(this.results,
       row => row.totalVotes
     )]);
     this.svg.selectAll('.y.axis.votes').remove();
-    
+
     this.svg
       .append("g")
       .attr("class", "y axis votes")
@@ -119,7 +125,6 @@ export class GraphWithFixedtStep extends GraphBase {
 
   }
 
-
   updateLine(selector, color, cy, pathLine, pathD) {
     const dots = this.svg.selectAll(selector)
       .data(this.results);
@@ -130,12 +135,11 @@ export class GraphWithFixedtStep extends GraphBase {
       .attr("class", selector.replace(/\./g, ' '))
       .attr("r", 2.5)
       .attr('fill', color)
-      .attr("cx", row => this.x(row.minDistance))
+      .attr("cx", row => this.x(row.distance))
       .attr("cy", cy)
       .attr("opacity", 0)
       .transition()
       .attr("opacity", 1)
-    // .duration(700);
 
     dots.exit()
       .attr("opacity", 0)
@@ -146,9 +150,4 @@ export class GraphWithFixedtStep extends GraphBase {
       .attr("d", pathD);
   }
 
-
-  addAxises() {
-    super.addAxises();
-
-  }
 }
