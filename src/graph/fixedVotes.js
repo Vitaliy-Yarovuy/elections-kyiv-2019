@@ -2,45 +2,13 @@ import '@babel/polyfill'
 import * as d3 from 'd3';
 import { graph, candidates } from '../config';
 import { GraphBase, calculatePercentage, percentageKey } from './base';
-import { GraphWithFixedtStep } from './fixedStep';
-import { sliderHorizontal } from 'd3-simple-slider';
+import { GraphFixedStep } from './fixedStep';
+import { GraphSlider } from './slider';
 
-export class GraphWithFixedtVotes extends GraphWithFixedtStep {
+export class GraphFixedVotes extends GraphFixedStep {
   step = 10;
 
-  initSlider(selector) {
-    this.slider = sliderHorizontal()
-      .min(2)
-      .max(30)
-      .step(1)
-      .width(graph.width)
-      .displayValue(true)
-      .on('onchange', val => {
-        this.step = val;
-        this.process();
-        this.update();
-      });
-
-    d3.select(selector)
-      .append('svg')
-      .attr('width', graph.width + graph.margin.left + graph.margin.right)
-      .attr('height', 100)
-      .append('g')
-      .attr('transform', 'translate(' + graph.margin.left + ',30)')
-      .call(this.slider);
-
-    //bug in slider
-    setTimeout(() => {
-      this.slider.value(this.step);
-    }, 500);
-  }
-
-  constructor(selector = 'body') {
-    super(selector);
-  }
-
   process() {
-
     const totalVotes = this.rawData.reduce((sum, row) => sum + row.totalVotes, 0);
     const votesStep = totalVotes / this.step  //totalVotes * this.step / 100;
 
@@ -71,10 +39,7 @@ export class GraphWithFixedtVotes extends GraphWithFixedtStep {
       return calculatePercentage(row);
     });
 
-    console.log(this.rawData);
-    console.log(this.results);
   }
-
 
   update() {
     super.update();
@@ -82,7 +47,7 @@ export class GraphWithFixedtVotes extends GraphWithFixedtStep {
   }
 
   updateBar() {
-     const bars = this.svg.selectAll('rect.bar.votes')
+    const bars = this.svg.selectAll('rect.bar.votes')
       .data(this.results);
 
     bars.enter()
@@ -105,3 +70,24 @@ export class GraphWithFixedtVotes extends GraphWithFixedtStep {
   }
 
 }
+
+
+
+
+
+export class GraphFixedVotesSlider {
+  constructor(selector = 'body', data) {
+    this.graph = new GraphFixedVotes(selector, data);
+    this.slider = new GraphSlider(selector, {
+      min: 2,
+      max: 30,
+      step: 1,
+      value: this.graph.step,
+      onChange: value => {
+        this.graph.setStep(value);
+        this.barsUpdate(this.graph.results);
+      }
+    });
+    this.barsUpdate = barFixedVotesBuilder(selector);
+  }
+} 

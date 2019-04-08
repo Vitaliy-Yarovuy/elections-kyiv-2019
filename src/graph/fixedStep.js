@@ -2,9 +2,9 @@ import '@babel/polyfill'
 import * as d3 from 'd3';
 import { graph, candidates } from '../config';
 import { GraphBase, calculatePercentage, percentageKey } from './base'
-import { sliderHorizontal } from 'd3-simple-slider';
+import { GraphSlider } from './slider';
 
-export class GraphWithFixedtStep extends GraphBase {
+export class GraphFixedStep extends GraphBase {
   step = 200;
 
   y1 = d3.scaleLinear().range([graph.height, 0]);
@@ -20,13 +20,6 @@ export class GraphWithFixedtStep extends GraphBase {
   lineVotes = d3.line()
     .x(row => this.x(row.distance))
     .y(row => this.y1(row.totalVotes));
-
-
-
-  constructor(selector = 'body') {
-    super(selector);
-    this.initSlider(selector);
-  }
 
   process() {
     this.results = Object.values(
@@ -65,31 +58,10 @@ export class GraphWithFixedtStep extends GraphBase {
   }
 
 
-  initSlider(selector) {
-    this.slider = sliderHorizontal()
-      .min(50)
-      .max(1000)
-      .step(50)
-      .width(graph.width)
-      .displayValue(true)
-      .on('onchange', val => {
-        this.step = val;
-        this.process();
-        this.update();
-      });
-
-    d3.select(selector)
-      .append('svg')
-      .attr('width', graph.width + graph.margin.left + graph.margin.right)
-      .attr('height', 100)
-      .append('g')
-      .attr('transform', 'translate(' + graph.margin.left + ',30)')
-      .call(this.slider);
-
-    //bug in slider
-    setTimeout(() => {
-      this.slider.value(this.step);
-    }, 500);
+  setStep(value) {
+    this.step = value;
+    this.process();
+    this.update();
   }
 
   update() {
@@ -149,5 +121,20 @@ export class GraphWithFixedtStep extends GraphBase {
       .transition()
       .attr("d", pathD);
   }
-
 }
+
+
+
+export class GraphFixedStepSlider {
+  constructor(selector = 'body', data) {
+    this.graph = new GraphFixedStep(selector, data);
+    this.slider = new GraphSlider(selector, {
+      min: 50,
+      max: 1000,
+      step: 50,
+      value: this.graph.step,
+      onChange: value => this.graph.setStep(value)
+    });
+  }
+}
+

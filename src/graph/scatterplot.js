@@ -5,8 +5,10 @@ import { graph, candidates, csvUrl } from '../config';
 
 
 export class Scatterplot extends GraphBase {
-  constructor(selector) {
-    super(selector);
+
+  constructor(selector, data){
+    super(selector, data);
+    this.update();
   }
 
   process() {

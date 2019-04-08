@@ -22,16 +22,12 @@ export class GraphBase {
   yAxis = d3.axisLeft(this.y).ticks(5);
 
 
-  constructor(selector = 'body') {
+  constructor(selector = 'body', data) {
     this.init(selector);
-
-    this.loadData().then((data) => {
-      this.rawData = data;
-      this.process();
-      this.scaleRange();
-      this.update();
-      this.addAxises();
-    });
+    this.rawData = data;
+    this.process();
+    this.scaleRange();
+    this.addAxises();
   }
 
 
@@ -45,24 +41,6 @@ export class GraphBase {
         "translate(" + graph.margin.left + "," + graph.margin.top + ")");
   }
 
-  async loadData() {
-    return d3.dsv(';', csvUrl)
-      .then(rawData => rawData.map(row => {
-        const result = {
-          voters: parseInt(row.voters),
-          totalVotes: parseInt(row.totalVotes),
-          distance: parseFloat(row.distance)
-        }
-
-        Object.keys(candidates).forEach(candidate => {
-          result[candidate] = parseInt(row[candidate]);
-        });
-
-        return result;
-      })
-      );
-  }
-
   scaleRange() {
     // Scale the range of the data
     this.x.domain([0, d3.max(this.rawData, row => row.distance) + 300]);
@@ -72,7 +50,7 @@ export class GraphBase {
           candidate => row[percentageKey(candidate)]
         )
       )
-    )]);
+    ) + 10]);
   }
 
   process() {
