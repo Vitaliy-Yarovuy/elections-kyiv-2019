@@ -4,6 +4,7 @@ import { graph, candidates } from '../config';
 import { GraphBase, calculatePercentage, percentageKey } from './base';
 import { GraphFixedStep } from './fixedStep';
 import { GraphSlider } from './slider';
+import { barFixedVotesBuilder } from './barsFixedVotes';
 
 export class GraphFixedVotes extends GraphFixedStep {
   step = 10;
@@ -55,7 +56,7 @@ export class GraphFixedVotes extends GraphFixedStep {
       .merge(bars)
       .attr('class', 'bar votes')
       .attr('fill', 'black')
-      .attr('opacity', 0.5)
+      .attr('opacity', 0.7)
       .attr('width', 1)
       .attr('y', row => this.y1(row.totalVotes))
       .attr('height', row => graph.height - this.y1(row.totalVotes))
@@ -66,13 +67,8 @@ export class GraphFixedVotes extends GraphFixedStep {
       .transition()
       .attr('opacity', 0)
       .remove();
-
   }
-
 }
-
-
-
 
 
 export class GraphFixedVotesSlider {

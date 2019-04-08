@@ -1,5 +1,4 @@
 
-
 // Set the dimensions of the canvas / graph
 const margin = { top: 30, right: 50, bottom: 30, left: 50 },
   width = 600 - margin.left - margin.right,
@@ -15,13 +14,13 @@ export const graph = {
 
 
 export const candidates = {
-  Poroshenko: {
-    color: 'red'
-  },
   Zelenskiy: {
-    color: 'green'
+    color: '#6dac15'
+  },
+  Poroshenko: {
+    color: '#c51329'
   },
   Tymoshenko: {
-    color: 'blue'
+    color: '#ff9901'
   }
 }
