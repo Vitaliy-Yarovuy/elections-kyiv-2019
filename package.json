@@ -25,19 +25,26 @@
     "html-webpack-plugin": "^3.2.0",
     "merge2": "^1.2.3",
     "mini-css-extract-plugin": "^0.5.0",
+    "simplify-geojson": "^1.0.3",
+    "stream-to-promise": "^2.2.0",
     "through2": "^3.0.1",
     "through2-filter": "^3.0.0",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.3.0",
-    "webpack-dev-server": "^3.2.1",
-    "stream-to-promise": "^2.2.0"
+    "webpack-dev-server": "^3.2.1"
   },
   "dependencies": {
     "@babel/polyfill": "^7.4.3",
     "d3": "^5.9.2",
     "d3-delaunay": "^4.1.5",
+    "d3-geo-voronoi": "^1.1.2",
     "d3-simple-slider": "^1.4.2",
+    "es6-promisify": "^6.0.1",
     "leaflet": "^1.4.0",
-    "simple-statistics": "^7.0.2"
+    "martinez-polygon-clipping": "^0.5.0",
+    "node-kmeans": "^1.1.8",
+    "polygon-clipping": "^0.14.0",
+    "simple-statistics": "^7.0.2",
+    "skmeans": "^0.10.0"
   }
 }
