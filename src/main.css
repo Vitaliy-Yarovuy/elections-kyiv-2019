@@ -1,16 +1,10 @@
 
 body { font: 12px Arial;}
 
-path { 
-    stroke: steelblue;
-    stroke-width: 2;
-    fill: none;
+.leaflet-range-control input[type=range][orient=vertical] {
+    height: 300px;
 }
 
-.axis path,
-.axis line {
-    fill: none;
-    stroke: grey;
-    stroke-width: 1;
-    shape-rendering: crispEdges;
+.leaflet-range-control label{
+    padding: 5px;
 }

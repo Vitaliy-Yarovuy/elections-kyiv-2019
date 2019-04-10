@@ -1,4 +1,8 @@
 // import 'leaflet/dist/leaflet.css' 
+import 'leaflet-range/L.Control.Range';
+import 'leaflet-range/L.Control.Range.css';
+import './main.css';
+
 import '@babel/polyfill'
 import * as d3 from 'd3';
 import { csvUrl, candidates } from './config';
