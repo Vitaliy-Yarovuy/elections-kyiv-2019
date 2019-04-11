@@ -30,9 +30,9 @@ d3.dsv(';', csvUrl)
 
     return result;
   })).then(results => {
-    new Scatterplot('body', results);
-    new GraphFixedStepSlider('body', results);
-    new GraphFixedVotesSlider('body', results);
+    new Scatterplot('#grafs', results);
+    new GraphFixedStepSlider('#grafs', results);
+    new GraphFixedVotesSlider('#grafs', results);
     setData(results);
   });
 

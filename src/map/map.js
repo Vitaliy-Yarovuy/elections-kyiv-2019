@@ -28,12 +28,18 @@ L.Control.Label = L.Control.extend({
   onAdd: function (map) {
     const container = L.DomUtil.create('div', 'leaflet-range-control leaflet-bar ');
 
-    L.DomEvent.on(container, 'mousedown mouseup click touchstart', function (e) {
-      L.DomEvent.stopPropagation();
-      this.fire('click');
-    });
 
+
+    L.DomUtil.create('label', '', container).innerText = 'animate:';
+    this._checkbox = L.DomUtil.create('input', '', container);
+    this._checkbox.type = 'checkbox';
+    L.DomUtil.create('br', '', container);
     this._label = L.DomUtil.create('label', '', container);
+
+
+    L.DomEvent.on(this._checkbox, 'change', (e) => {
+      this.fire('change', { value: e.target.checked });
+    });
 
     return container;
   },
@@ -42,6 +48,8 @@ L.Control.Label = L.Control.extend({
     this._label.innerText = text;
   }
 });
+
+L.Control.Label.include(L.Evented.prototype)
 
 L.control.label = function (opts) {
   return new L.Control.Label(opts);
@@ -104,6 +112,19 @@ export const setData = async (data) => {
     clusterizeK = e.value;
     run();
   });
+
+
+  let timerId;
+  kMeanLabel.on('change', function (e) {
+    const checked = e.value;
+    if (!checked) {
+      clearInterval(timerId);
+      timerId = null;
+    } else {
+      timerId = setInterval(run, 1000);
+    }
+  });
+
 
   map.addControl(kMeanLabel);
   map.addControl(slider);
@@ -173,5 +194,6 @@ export const setData = async (data) => {
 
   }
 
-  setInterval(run, 1000);
+
+  run();
 }

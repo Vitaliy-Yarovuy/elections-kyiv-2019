@@ -35,7 +35,8 @@ module.exports = {
       chunkFilename: "[id].css"
     }),
     new CopyPlugin([
-      'data/results_2019_kyiv.csv'
+      { from: 'data/results_2019_kyiv.csv', to: 'data/results_2019_kyiv.csv' },
+      
     ]),
   ]
 };
