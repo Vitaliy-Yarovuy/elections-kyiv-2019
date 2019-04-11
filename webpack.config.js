@@ -7,7 +7,8 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
-        exclude: /node_modules/,
+        // exclude: /node_modules/,
+        // include: /node_modules\/(?!module-name)/,
         use: {
           loader: "babel-loader"
         }
@@ -25,6 +26,9 @@ module.exports = {
       }
     ]
   },
+  resolve: {
+    symlinks: true
+  },
   plugins: [
     new HtmlWebPackPlugin({
       template: "./src/index.html",
@@ -36,7 +40,6 @@ module.exports = {
     }),
     new CopyPlugin([
       { from: 'data/results_2019_kyiv.csv', to: 'data/results_2019_kyiv.csv' },
-      
     ]),
   ]
 };
