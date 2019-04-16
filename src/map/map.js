@@ -1,5 +1,7 @@
 // import L from 'leaflet';
 import * as d3 from 'd3';
+import { debounce } from 'lodash';
+import './legend';
 import { promisify } from 'es6-promisify';
 import { Delaunay } from 'd3-delaunay';
 import clipping from 'polygon-clipping';
@@ -23,44 +25,10 @@ const xmax = Math.max(...kyivPoligon.map(([x]) => x)) + delta;
 const ymax = Math.max(...kyivPoligon.map(([, y]) => y)) + delta;
 const bounds = [xmin, ymin, xmax, ymax];
 
-/////////////////
-L.Control.Label = L.Control.extend({
-  onAdd: function (map) {
-    const container = L.DomUtil.create('div', 'leaflet-range-control leaflet-bar ');
-
-
-
-    L.DomUtil.create('label', '', container).innerText = 'animate:';
-    this._checkbox = L.DomUtil.create('input', '', container);
-    this._checkbox.type = 'checkbox';
-    L.DomUtil.create('br', '', container);
-    this._label = L.DomUtil.create('label', '', container);
-
-
-    L.DomEvent.on(this._checkbox, 'change', (e) => {
-      this.fire('change', { value: e.target.checked });
-    });
-
-    return container;
-  },
-
-  setText: function (text) {
-    this._label.innerText = text;
-  }
-});
-
-L.Control.Label.include(L.Evented.prototype)
-
-L.control.label = function (opts) {
-  return new L.Control.Label(opts);
-}
-///////////
-
-
 
 const map = L.map('map', {
   center: [50.4472, 30.5233],
-  zoom: 11
+  zoom: 10
 });
 
 
@@ -121,7 +89,7 @@ export const setData = async (data) => {
       clearInterval(timerId);
       timerId = null;
     } else {
-      timerId = setInterval(run, 1000);
+      timerId = setInterval(run, 2000);
     }
   });
 
@@ -130,20 +98,17 @@ export const setData = async (data) => {
   map.addControl(slider);
 
   const vectors = data.map(row => [row.lat, row.lon]);
-  let results;
   const keysToSum = ['totalVotes', 'voters', ...Object.keys(candidates)];
-
   const layers = [];
 
-
-  async function run() {
+  const run = debounce(async function () {
     kMeanLabel.setText(`k-means:${clusterizeK}`);
 
     const clusterize = promisify(kmeans.clusterize);
 
-    const res = await clusterize(vectors, { k: clusterizeK })
+    const res = await clusterize(vectors, { k: clusterizeK });
 
-    results = res.map(item => {
+    const results = res.map(item => {
       return {
         lat: item.centroid[0],
         lon: item.centroid[1],
@@ -163,37 +128,31 @@ export const setData = async (data) => {
     const delaunay = Delaunay.from(points);
     const voronoi = delaunay.voronoi(bounds);
 
-    let i = 0;
-    const poligons = voronoi.cellPolygons();
-
     let layer;
     while (layer = layers.pop()) {
       layer.remove();
     }
 
+    const poligons = voronoi.cellPolygons();
+    let i = 0;
+
     for (const poligon of poligons) {
-
-      const row = results.find(row => voronoi.contains(i, row.lat, row.lon))
-
-      // L.circle([row.lat, row.lon], { radius: 1, weight: 1 }).addTo(map);
+      const row = results.find(row => voronoi.contains(i, row.lat, row.lon));
 
       let newPoligon = clipping.intersection([poligon], [kyivPoligon]);
-
       if (newPoligon) {
         newPoligon = clipping.difference(newPoligon, [kyivPoligonExclude]);
       }
-
-      //console.log('track', poligon, kyivPoligon, newPoligon);
-
       if (newPoligon) {
         layers.push(L.polygon(newPoligon, { weight: 1, ...getPoligonStyle(row) }).addTo(map));
       }
 
+      layers.push(L.circle([row.lat, row.lon], { radius: 6, color: '#555' }).addTo(map));
+
       i++;
     }
 
-  }
-
+  }, 200);
 
   run();
 }

@@ -46,15 +46,15 @@ export class GraphFixedStep extends GraphBase {
   init(selector) {
     super.init(selector);
     this.pathLines = Object.keys(candidates).reduce((acc, candidate) => {
-      acc[candidate] = this.svg.append("path")
-        .style("fill", "transparent")
-        .style("stroke", candidates[candidate].color)
+      acc[candidate] = this.svg.append('path')
+        .style('fill', 'transparent')
+        .style('stroke', candidates[candidate].color)
       return acc;
     }, {});
 
-    this.pathLineVotes = this.svg.append("path")
-      .style("fill", "transparent")
-      .style("stroke", 'black');
+    this.pathLineVotes = this.svg.append('path')
+      .style('fill', 'transparent')
+      .style('stroke', 'black');
   }
 
 
@@ -71,9 +71,9 @@ export class GraphFixedStep extends GraphBase {
     this.svg.selectAll('.y.axis.votes').remove();
 
     this.svg
-      .append("g")
-      .attr("class", "y axis votes")
-      .attr("transform", "translate(" + graph.width + " ,0)")
+      .append('g')
+      .attr('class', 'y axis votes')
+      .attr('transform', 'translate(' + graph.width + ' ,0)')
       .call(this.y1Axis);
 
     Object.keys(candidates).forEach(candidate => {
@@ -102,24 +102,24 @@ export class GraphFixedStep extends GraphBase {
       .data(this.results);
 
     dots.enter()
-      .append("circle")
+      .append('circle')
       .merge(dots)
-      .attr("class", selector.replace(/\./g, ' '))
-      .attr("r", 2.5)
+      .attr('class', selector.replace(/\./g, ' '))
+      .attr('r', 2.5)
       .attr('fill', color)
-      .attr("cx", row => this.x(row.distance))
-      .attr("cy", cy)
-      .attr("opacity", 0)
+      .attr('cx', row => this.x(row.distance))
+      .attr('cy', cy)
+      .attr('opacity', 0)
       .transition()
-      .attr("opacity", 1)
+      .attr('opacity', 1)
 
     dots.exit()
-      .attr("opacity", 0)
+      .attr('opacity', 0)
       .remove();
 
     pathLine
       .transition()
-      .attr("d", pathD);
+      .attr('d', pathD);
   }
 }
 
@@ -132,6 +132,7 @@ export class GraphFixedStepSlider {
       min: 50,
       max: 1000,
       step: 50,
+      label: 'step: distance in meters',
       value: this.graph.step,
       onChange: value => this.graph.setStep(value)
     });

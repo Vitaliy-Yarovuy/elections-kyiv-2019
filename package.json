@@ -43,6 +43,7 @@
     "es6-promisify": "^6.0.1",
     "leaflet": "^1.4.0",
     "leaflet-range": "^0.1.5",
+    "lodash": "^4.17.11",
     "node-kmeans": "^1.1.8",
     "polygon-clipping": "^0.14.0",
     "whatwg-fetch": "^3.0.0"
