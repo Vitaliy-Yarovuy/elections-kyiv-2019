@@ -1,6 +1,6 @@
 // import L from 'leaflet';
 import * as d3 from 'd3';
-import { debounce } from 'lodash';
+import { throttle } from 'lodash';
 import './legend';
 import { promisify } from 'es6-promisify';
 import { Delaunay } from 'd3-delaunay';
@@ -76,7 +76,7 @@ export const setData = async (data) => {
     iconClass: 'leaflet-range-icon'
   });
 
-  slider.on('input change', function (e) {
+  slider.on('change', function (e) {
     clusterizeK = e.value;
     run();
   });
@@ -89,7 +89,7 @@ export const setData = async (data) => {
       clearInterval(timerId);
       timerId = null;
     } else {
-      timerId = setInterval(run, 2000);
+      timerId = setInterval(run, 1000);
     }
   });
 
@@ -101,7 +101,7 @@ export const setData = async (data) => {
   const keysToSum = ['totalVotes', 'voters', ...Object.keys(candidates)];
   const layers = [];
 
-  const run = debounce(async function () {
+  const run = throttle(async function () {
     kMeanLabel.setText(`k-means:${clusterizeK}`);
 
     const clusterize = promisify(kmeans.clusterize);

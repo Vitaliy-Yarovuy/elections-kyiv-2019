@@ -46,6 +46,7 @@
     "lodash": "^4.17.11",
     "node-kmeans": "^1.1.8",
     "polygon-clipping": "^0.14.0",
+    "simple-statistics": "^7.0.2",
     "whatwg-fetch": "^3.0.0"
   },
   "browserslist": [
