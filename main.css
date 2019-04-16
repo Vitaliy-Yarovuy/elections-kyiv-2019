@@ -64,7 +64,7 @@ body { font: 12px Arial;
     
 }
 .page{
-    width: 960px;
+    width: 720px;
     margin: 0 auto; 
 }
 
@@ -76,3 +76,10 @@ body { font: 12px Arial;
     padding: 5px;
 }
 
+.leaflet-percentage-container{
+    position: absolute;
+    text-align: center;
+    right: 35px;
+    top: 50px;
+    border:1px solid rgba(125,125,125);
+}
