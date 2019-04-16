@@ -6,17 +6,6 @@ const createCsvStream = file =>
   fs.createReadStream(file)
     .pipe(csv({ headers: true, delimiter: ';' }));
 
-const squash = () => {
-  let objs = [];
-  return through2.obj(function (data, enc, cb) {
-    objs.push(data);
-    cb(null, null);
-  }, function (cb) {
-    this.push(objs);
-    cb();
-  });
-};
-
 const toRadian = value => value  * Math.PI / 180;
 
 const getDistance = (locA, locB) => {
@@ -27,4 +16,4 @@ const getDistance = (locA, locB) => {
   return R * Math.sqrt(Math.pow(dLat, 2) + Math.pow(Math.cos(avgLat)*dLon,2));
 } 
 
-module.exports = { createCsvStream, squash, getDistance };
+module.exports = { createCsvStream, getDistance };

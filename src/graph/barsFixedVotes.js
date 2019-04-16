@@ -31,7 +31,7 @@ export const barFixedVotesBuilder = (selector) => {
     .attr("class", "x axis")
     .attr("transform", "translate(0," + graph.height + ")")
     .call(xAxis);
-    
+
 
 
   return (data) => {
@@ -70,6 +70,18 @@ export const barFixedVotesBuilder = (selector) => {
       .attr('x', (row, i) => i * columnWidht + 1)
       .attr('y', row => y(100 - row[0]))
       .attr('height', row => y(100 - (row[1] - row[0])));
+
+    gSerias.selectAll('text.bar-percent')
+      .data(x => x)
+      .enter()
+      .append('text')
+      .classed('bar-percent', true)
+      .attr('text-anchor', 'middle')
+      .attr('alignment-baseline', 'central')
+      .attr('font-size', '12')
+      .attr('fill', 'black')
+      .attr('transform', (row, index) => `translate(${(index + 0.5) * columnWidht}, ${y(100 - row[1] + (row[1] - row[0]) / 2)}) rotate(-90)`)
+      .text(row => `${Math.round((row[1] - row[0]) * 10) / 10}`);
 
 
     svg.selectAll('text.bar-title').remove();
