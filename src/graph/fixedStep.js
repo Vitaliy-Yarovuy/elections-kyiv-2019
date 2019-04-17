@@ -132,7 +132,7 @@ export class GraphFixedStepSlider {
       min: 50,
       max: 1000,
       step: 50,
-      label: 'step: distance in meters',
+      label: 'step distance in meters',
       value: this.graph.step,
       onChange: value => this.graph.setStep(value)
     });

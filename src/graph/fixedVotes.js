@@ -79,7 +79,7 @@ export class GraphFixedVotesSlider {
       max: 30,
       step: 1,
       value: this.graph.step,
-      label: 'step: numbers of bars',
+      label: 'number of bars',
       onChange: value => {
         this.graph.setStep(value);
         this.barsUpdate(this.graph.results);
