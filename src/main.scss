@@ -1,0 +1,42 @@
+@import url("~leaflet/dist/leaflet.css");
+@import url("~leaflet-range/L.Control.Range.css");
+
+.kyiv-elections-svg-container {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    vertical-align: top;
+    overflow: hidden;
+}
+.kyiv-elections-svg-content {
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+
+#kyiv-elections-map {
+  height: 500px;
+  .leaflet-range-control input[type="range"][orient="vertical"] {
+    height: 300px;
+  }
+
+  .leaflet-range-control label {
+    padding: 5px;
+  }
+
+  .leaflet-percentage-container {
+    position: absolute;
+    text-align: center;
+    right: 35px;
+    top: 50px;
+    border: 1px solid rgb(125, 125, 125);
+  }
+}
+
+#kyiv-elections-scatterplot,
+#kyiv-elections-fixed-distance-step,
+#kyiv-elections-fixed-votes-step {
+  font: 12px Arial;
+}

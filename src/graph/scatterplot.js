@@ -1,7 +1,7 @@
 import '@babel/polyfill'
 import * as d3 from 'd3';
-import { sampleCorrelation } from 'simple-statistics'
-import { GraphBase, calculatePercentage, percentageKey } from './base'
+import { sampleCorrelation } from 'simple-statistics';
+import { GraphBase, calculatePercentage, percentageKey } from './base';
 import { graph, candidates, csvUrl } from '../config';
 
 
@@ -20,7 +20,6 @@ export class Scatterplot extends GraphBase {
 
   update() {
 
-
     Object.keys(candidates).forEach((candidate, index) => {
       const distances = this.results.map(row => row.distance);
       const percentages = this.results.map(row => row[percentageKey(candidate)]);
@@ -32,7 +31,6 @@ export class Scatterplot extends GraphBase {
         .attr('text-anchor', 'end')
         .attr('transform', `translate(${graph.width}, ${15 * index})`)
         .text(Math.round(correlation*1000)/1000);
-
 
       // Add the scatterplot
       this.svg.selectAll("dot")

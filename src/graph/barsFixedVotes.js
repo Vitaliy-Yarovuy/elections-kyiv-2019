@@ -1,16 +1,14 @@
 import '@babel/polyfill'
 import * as d3 from 'd3';
 import { graph, candidates } from '../config';
-import { percentageKey } from './base';
+import { percentageKey, getScaleSVG } from './base';
 
 const grey = '#a6a2a2'
 
 export const barFixedVotesBuilder = (selector) => {
-
-  const svg = d3.select(selector)
-    .append('svg')
-    .attr('width', graph.width + graph.margin.left + graph.margin.right)
-    .attr('height', graph.height + graph.margin.top + graph.margin.bottom + 200)
+  const width = graph.width + graph.margin.left + graph.margin.right;
+  const height = graph.height + graph.margin.top + graph.margin.bottom + 100;
+  const svg = getScaleSVG(selector, width, height)
     .append('g')
     .attr('transform',
       'translate(' + graph.margin.left + ',' + graph.margin.top + ')');

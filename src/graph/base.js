@@ -11,6 +11,18 @@ export const calculatePercentage = row => {
   return row;
 };
 
+export const getScaleSVG = (selector, width, height) => {
+  const ratio = 100 * height / width;
+
+  return d3.select(selector)
+    .append('div')
+    .classed('kyiv-elections-svg-container', true)
+    .style('padding-bottom', `${ratio}%`)
+    .append('svg')
+    .classed('kyiv-elections-svg-content', true)
+    .attr('preserveAspectRatio', 'xMinYMin meet')
+    .attr('viewBox', `0 0 ${width} ${height}`);
+}
 
 export class GraphBase {
   // Set the ranges
@@ -32,13 +44,13 @@ export class GraphBase {
 
 
   init(selector) {
-    this.svg = d3.select(selector)
-      .append("svg")
-      .attr("width", graph.width + graph.margin.left + graph.margin.right)
-      .attr("height", graph.height + graph.margin.top + graph.margin.bottom)
-      .append("g")
-      .attr("transform",
-        "translate(" + graph.margin.left + "," + graph.margin.top + ")");
+    const width = graph.width + graph.margin.left + graph.margin.right;
+    const height = graph.height + graph.margin.top + graph.margin.bottom;
+
+    this.svg = getScaleSVG(selector, width, height)
+      .append('g')
+      .attr('transform',
+        'translate(' + graph.margin.left + ',' + graph.margin.top + ')');
   }
 
   scaleRange() {
@@ -62,13 +74,13 @@ export class GraphBase {
   }
 
   addAxises() {
-    this.svg.append("g")
-      .attr("class", "x axis")
-      .attr("transform", "translate(0," + graph.height + ")")
+    this.svg.append('g')
+      .attr('class', 'x axis')
+      .attr('transform', 'translate(0,' + graph.height + ')')
       .call(this.xAxis);
 
-    this.svg.append("g")
-      .attr("class", "y axis")
+    this.svg.append('g')
+      .attr('class', 'y axis')
       .call(this.yAxis);
   }
 

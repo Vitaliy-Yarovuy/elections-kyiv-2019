@@ -5,8 +5,8 @@
   "main": "./src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "webpack --mode development --module-bind js=babel-loader",
-    "build": "webpack --mode production --module-bind js=babel-loader",
+    "dev": "webpack --mode development",
+    "build": "webpack --mode production",
     "start": "webpack-dev-server --mode development --open",
     "collect": "node build/index.js"
   },
@@ -26,11 +26,15 @@
     "html-webpack-plugin": "^3.2.0",
     "merge2": "^1.2.3",
     "mini-css-extract-plugin": "^0.5.0",
+    "node-sass": "^4.11.0",
+    "resolve-url-loader": "^3.1.0",
+    "sass-loader": "^7.1.0",
     "simplify-geojson": "^1.0.3",
     "stream-to-promise": "^2.2.0",
     "through2": "^3.0.1",
     "through2-filter": "^3.0.0",
-    "webpack": "^4.29.6",
+    "url-loader": "^1.1.2",
+    "webpack": "^4.30.0",
     "webpack-cli": "^3.3.0",
     "webpack-dev-server": "^3.2.1"
   },

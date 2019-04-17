@@ -1,12 +1,13 @@
-// import L from 'leaflet';
+import * as L from 'leaflet';
+import 'leaflet-range/L.Control.Range';
 import * as d3 from 'd3';
 import { throttle } from 'lodash';
-import './legend';
 import { promisify } from 'es6-promisify';
 import { Delaunay } from 'd3-delaunay';
 import clipping from 'polygon-clipping';
 import kmeans from 'node-kmeans';
 import kyiv from '../../data/kyiv-simple.geo.json';
+import './legend';
 import { candidates } from '../config';
 import { calculatePercentage, percentageKey } from '../graph/base';
 
@@ -26,7 +27,7 @@ const ymax = Math.max(...kyivPoligon.map(([, y]) => y)) + delta;
 const bounds = [xmin, ymin, xmax, ymax];
 
 
-const map = L.map('map', {
+const map = L.map('kyiv-elections-map', {
   center: [50.4472, 30.5233],
   zoom: 10
 });

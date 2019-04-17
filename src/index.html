@@ -4,19 +4,27 @@
 <head>
   <meta charset="utf-8">
   <title>elections-kyiv-2019</title>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
-    crossorigin="" />
-  <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js" integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
-    crossorigin=""></script>
 </head>
 
 <body>
-  <div class="page">
-      <h1>Graph:</h1>
-      <div id="grafs"></div>
-      <h1>Map:</h1>
-      <div id="map" style=" height: 600px;"></div>
+  <div class="page" style="max-width: 920px; margin: 0 auto; ">
+    <h1>Graph:</h1>
+
+    <div id="kyiv-elections-scatterplot"></div>
+    <div id="kyiv-elections-fixed-distance-step"></div>
+    <div id="kyiv-elections-fixed-votes-step"></div>
+
+    <h1>Map:</h1>
+    <div id="kyiv-elections-map"></div>
+
+
   </div>
+  <script type="text/javascript">
+    window.onload = function () {
+      renderKyivElectionGraphs('./data/results_2019_kyiv.csv');
+      // renderKyivElectionGraphs('https://vitaliy-yarovuy.github.io/elections-kyiv-2019/data/results_2019_kyiv.csv');
+    };
+  </script>
 </body>
 
 </html>
